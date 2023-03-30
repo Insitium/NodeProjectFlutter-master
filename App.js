@@ -159,86 +159,87 @@ app.get('/login', (req, res) => {
 //json web tokens 
 
 // post patient data method
-// app.post("/patient/edit",(req,res) =>{
+app.post("/patient/edit/:patientId",(req,res) =>{
 
-//     console.log('/patient METHOD:POST')
-//         const patientId= req.body.patientId;
-//         const fullName=req.body.fullName;
-//         const age= req.body.age;
-//         const address= req.body.address;
-//         const dob= req.body.dob;
-//         const phoneNumbe= req.body.phoneNumber;
-//         const image= req.body.image;
+    console.log('/patient METHOD:POST')
+        const patientId= req.body.patientId;
+        const fullName=req.body.fullName;
+        const age= req.body.age;
+        const address= req.body.address;
+        const dob= req.body.dob;
+        const phoneNumber= req.body.phoneNumber;
+        const image= req.body.image;
     
-//     if(req.body.fullName == "" || req.body.fullName == undefined){
-//         res.status(400).send({
-//             "success" : "false",
-//             "message" : "fullName is required"
-//         })
-//     }
-//     if(!containsOnlyNumbers(req.body.age) || req.body.age == undefined){
-//         return res.status(400).send({
-//             "success": "false",
-//             "message": "invalid age or age not given"
-//         })
-//     }
-//     if(req.body.address=="" || req.body.address == undefined){
-//         return res.status(400).send({
-//             "success" : "false",
-//             "message" : "address is required"
-//         })
-//     }
-//     if(req.body.dob=="" || req.body.dob == undefined){
-//         return res.status(400).send({
-//             "success" : "false",
-//             "message" : "dob is required"
-//         })
-//     }
+    if(req.body.fullName == "" || req.body.fullName == undefined){
+        res.status(400).send({
+            "success" : "false",
+            "message" : "fullName is required"
+        })
+    }
+    if(!containsOnlyNumbers(req.body.age) || req.body.age == undefined){
+        return res.status(400).send({
+            "success": "false",
+            "message": "invalid age or age not given"
+        })
+    }
+    if(req.body.address=="" || req.body.address == undefined){
+        return res.status(400).send({
+            "success" : "false",
+            "message" : "address is required"
+        })
+    }
+    if(req.body.dob=="" || req.body.dob == undefined){
+        return res.status(400).send({
+            "success" : "false",
+            "message" : "dob is required"
+        })
+    }
 
-//     if(req.body.phoneNumber =="" || req.body.phoneNumber == undefined){  
-//         return res.status(400).send({
-//             "success" : "false",
-//             "message" : "phonenumber is required"
-//         })
-//     }else{
-//         if(!containsOnlyNumbers(req.body.phoneNumber) || !((req.body.phoneNumber.length) == 10)){
-//             return res.status(400).send({
-//                 "success" : "false",
-//                 "message" : "invalid phone number"
-//             }) 
-//         }    
-//     }
+    if(req.body.phoneNumber =="" || req.body.phoneNumber == undefined){  
+        return res.status(400).send({
+            "success" : "false",
+            "message" : "phonenumber is required"
+        })
+    }else{
+        if(!containsOnlyNumbers(req.body.phoneNumber) || !((req.body.phoneNumber.length) == 10)){
+            return res.status(400).send({
+                "success" : "false",
+                "message" : "invalid phone number"
+            }) 
+        }    
+    }
 
-//     if(req.body.fullName != "" && containsOnlyNumbers(req.body.age) && req.body.address!=""
-//         && req.body.dob!="" && req.body.phoneNumber !="" && req.body.phoneNumber.length == 10 && containsOnlyNumbers(req.body.phoneNumber)) {
-//         try{
-//             patientModel.updateOne(
-//                 { patientId: patientId },
-//                 {
-//                   $set: {
-//                     fullName: fullName,
-//                     age: age,
-//                     address: address,
-//                     dob: dob,
-//                     phoneNumber: phoneNumber,
-//                     image: image,
+    if(req.body.fullName != "" && containsOnlyNumbers(req.body.age) && req.body.address!=""
+        && req.body.dob!="" && req.body.phoneNumber !="" && req.body.phoneNumber.length == 10 && containsOnlyNumbers(req.body.phoneNumber)) {
+        try{
+            patientModel.findOneAndUpdate(
+                { patientId: patientId },
+                {
+                  $set: {
+                    fullName: fullName,
+                    age: age,
+                    address: address,
+                    dob: dob,
+                    phoneNumber: phoneNumber,
+                    image: image,
                    
-//                   },
-//                 }
-//               )
-//             return res.status(200).send({
-//                 "success": "true",
-//                 "message": "Record added successfully"
-//             })
-//         }catch(err){
-//             console.log(err)
-//             return res.send({
-//                 "success": "false",
-//                 "message": err
-//             })
-//         }
-//     }
-// })
+                  },
+                }
+              )
+              console.log(patientId)
+            return res.status(200).send({patientModel,
+                "success": "true",
+                "message": "Record updated successfully"
+            })
+        }catch(err){
+            console.log(err)
+            return res.send({
+                "success": "false",
+                "message": err
+            })
+        }
+    }
+})
 //editing the patient's profile
 app.post("/patient",(req,res) =>{
 
